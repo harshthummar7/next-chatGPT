@@ -1,0 +1,39 @@
+.chat {
+  display: flex;
+  height: 100%;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.first {
+  margin: 18vh 8vh 8vh 8vh;
+}
+.second {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.third {
+  margin-top: 20vh;
+}
+
+.sidebar {
+  background-color: black;
+  width: 300px;
+}
+
+@media only screen and (max-width: 768px) {
+  .second {
+    flex-direction: column;
+  }
+}

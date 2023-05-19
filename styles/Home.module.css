@@ -1,0 +1,12 @@
+.home {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4em;
+  font-weight: 900;
+  letter-spacing: -4px;
+  word-spacing: 16px;
+  text-align: center;
+}

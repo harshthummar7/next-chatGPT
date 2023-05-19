@@ -1,0 +1,51 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  min-height: 35vh;
+  width: 22%;
+  margin: 0 8px;
+}
+
+.first {
+  min-width: 10vw;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 8.5vh;
+}
+
+.first i {
+  font-size: 20px;
+}
+
+.second {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 25vh;
+}
+
+.second div {
+  background-color: whitesmoke;
+  padding: 5px;
+  border-radius: 8px;
+  margin-top: 12px;
+  box-sizing: border-box;
+}
+
+.s1 p,
+.s2 p,
+.s3 p {
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .main {
+    width: 66%;
+    margin-bottom: 4em;
+  }
+}

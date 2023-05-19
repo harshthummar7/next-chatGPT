@@ -1,0 +1,69 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.first {
+  display: flex;
+  justify-content: flex-start;
+  height: 5vh;
+  margin: 12px;
+  border: 1px solid #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.first i {
+  margin-right: 8px;
+}
+
+.first p {
+  font-size: 15px;
+}
+
+.second {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.s1,
+.s2 {
+  display: flex;
+  align-items: baseline;
+  color: white;
+}
+
+.s1 i {
+  margin-right: 8px;
+}
+
+.s1 p {
+  font-size: 14px;
+  margin-right: 26px;
+}
+
+.s1 button {
+  background: wheat;
+  border-radius: 9px;
+  min-width: 3.5em;
+}
+
+.s2 img {
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+}
+
+.s2 p {
+  font-size: 14px;
+  margin-right: 26px;
+}
+
+.s2 i {
+  margin-left: 38px;
+}
