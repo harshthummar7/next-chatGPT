@@ -70,7 +70,7 @@ export default NextAuth({
       },
     }),
   ],
-
+  secret: "uZ5ENDzAjEjPxOA0VFXFDP4N6QY/DFO55dkbxsJ31FY=",
   session: {
     strategy: "jwt",
   },
