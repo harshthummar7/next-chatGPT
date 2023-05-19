@@ -5,8 +5,6 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "your-secret";
-
 async function getToken({ refreshToken }) {
   const url = `https://oauth2.googleapis.com/token`;
 
@@ -88,7 +86,7 @@ export default NextAuth({
             id: token.sub,
             email: token.email,
           },
-          JWT_SECRET,
+          process.env.JWT_SECRET,
           { expiresIn: "1d" }
         );
 
