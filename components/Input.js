@@ -10,8 +10,11 @@ export default function Input({ listFunction }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    listFunction(inputValue);
-    console.log(inputValue);
+    const value = inputValue;
+    console.log("1", value);
+    setInputValue("");
+    listFunction(value);
+    console.log("2", value);
   };
 
   return (
@@ -19,6 +22,7 @@ export default function Input({ listFunction }) {
       <form onSubmit={handleSubmit}>
         <div className={style.inputContainer}>
           <textarea
+            value={inputValue}
             placeholder="Send message"
             onChange={handleChange}
           ></textarea>

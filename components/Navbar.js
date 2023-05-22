@@ -12,18 +12,6 @@ function Navbar() {
       </h1>
 
       <ul className={`main-nav`}>
-        <li>
-          <Link href="/" legacyBehavior>
-            <a>Home</a>
-          </Link>
-        </li>
-
-        <li>
-          <Link href="/chat-gpt" legacyBehavior>
-            <a>ChatGpt</a>
-          </Link>
-        </li>
-
         {!session && (
           <li>
             <Link href="api/auth/signin" legacyBehavior>
@@ -40,18 +28,31 @@ function Navbar() {
         )}
 
         {session && (
-          <li>
-            <Link href="api/auth/signout" legacyBehavior>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  signOut();
-                }}
-              >
-                SignOut
-              </a>
-            </Link>
-          </li>
+          <>
+            <li>
+              <Link href="/" legacyBehavior>
+                <a>Home</a>
+              </Link>
+            </li>
+
+            <li>
+              <Link href="/chat-gpt" legacyBehavior>
+                <a>ChatGpt</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="api/auth/signout" legacyBehavior>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signOut();
+                  }}
+                >
+                  SignOut
+                </a>
+              </Link>
+            </li>
+          </>
         )}
       </ul>
     </nav>

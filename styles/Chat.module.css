@@ -1,6 +1,15 @@
 .chat {
   display: flex;
   height: 100%;
+  position: relative;
+  top: 65px;
+  bottom: 0;
+  /* width: 100%;
+  position: absolute;
+  right: 0px;
+  top: 0;
+  left: 0;
+  bottom: 0; */
 }
 
 .main {
@@ -10,11 +19,20 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  /*  */
+  position: relative;
+  left: 261px;
+  margin-top: 5vh;
 }
 
 .first {
   margin: 18vh 8vh 8vh 8vh;
 }
+
+.first h1 {
+  font-size: 35px;
+}
+
 .second {
   width: 100%;
   flex-direction: row;
@@ -24,12 +42,65 @@
 }
 
 .third {
-  margin-top: 20vh;
+  position: fixed;
+  bottom: 0;
+  margin-top: 22vh;
 }
 
 .sidebar {
   background-color: black;
   width: 300px;
+
+  /*  */
+  position: fixed;
+  bottom: 0;
+  top: 65px;
+
+  /* background-color: black;
+  min-width: 14vw;
+  position: absolute;
+  left: 0;
+  top: 66px;
+  bottom: 0; */
+}
+
+.chat_message {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  min-height: 14vh;
+}
+
+.chat_message h1 {
+  padding: 10px;
+}
+
+.chat_message h2 {
+  padding: 10px;
+}
+
+.logo {
+  background-color: black;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.resultLogo {
+  background-color: green;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.chat_question,
+.chat_answer {
+  display: flex;
+  align-items: center;
+  width: 46%;
+  justify-content: start;
 }
 
 @media only screen and (max-width: 768px) {
