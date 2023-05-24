@@ -5,7 +5,7 @@ export default function Sidebar({ name }) {
   return (
     <div className={style.main}>
       <div className={style.first}>
-        <i class="bi bi-plus"></i>
+        <i className="bi bi-plus"></i>
         <p>New Chat</p>
       </div>
       <div className={style.second}>

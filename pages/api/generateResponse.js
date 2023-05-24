@@ -47,7 +47,7 @@ export default async function generateResponse(req, res) {
   try {
     console.log("Inside");
     const response = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: "gpt-3.5-turbo",
       prompt: text,
       temperature: 0,
       max_tokens: 7,

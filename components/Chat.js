@@ -49,7 +49,7 @@ export default function Chat({ name }) {
         {list.length !== 0 ? (
           list.map((value, i) => {
             return (
-              <div className={style.chat_message}>
+              <div className={style.chat_message} key={i}>
                 <div className={style.chat_question}>
                   <div className={style.logo}></div>
                   <h1>{value}</h1>
@@ -68,11 +68,11 @@ export default function Chat({ name }) {
               <h1>ChatGPT</h1>
             </div>
             <div className={style.second}>
-              {data.map((d) => {
+              {data.map((d, i) => {
                 return (
-                  <>
+                  <React.Fragment key={i}>
                     <ECL data={d}></ECL>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </div>
@@ -86,5 +86,3 @@ export default function Chat({ name }) {
     </div>
   );
 }
-
-// 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

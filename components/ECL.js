@@ -5,7 +5,7 @@ export default function ECL({ data }) {
   return (
     <div className={style.main}>
       <div className={style.first}>
-        <i class={data.i}></i>
+        <i className={data.i}></i>
         <h2>{data.h2}</h2>
       </div>
       <div className={style.second}>

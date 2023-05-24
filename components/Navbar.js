@@ -1,9 +1,10 @@
+import React from "react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-function Navbar() {
+const Navbar = React.memo(() => {
   const { data: session, status } = useSession();
-  console.log({ session, status });
+  console.log("calling", { session, status });
 
   return (
     <nav className="header">
@@ -40,6 +41,13 @@ function Navbar() {
                 <a>ChatGpt</a>
               </Link>
             </li>
+
+            <li>
+              <Link href="/upload-file" legacyBehavior>
+                <a>UploadFile</a>
+              </Link>
+            </li>
+
             <li>
               <Link href="api/auth/signout" legacyBehavior>
                 <a
@@ -57,6 +65,6 @@ function Navbar() {
       </ul>
     </nav>
   );
-}
+});
 
 export default Navbar;

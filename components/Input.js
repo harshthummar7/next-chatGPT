@@ -35,7 +35,7 @@ export default function Input({ listFunction }) {
             href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes"
             target="_blank"
             rel="noreferrer"
-            class="underline"
+            className="underline"
           >
             ChatGPT May 12 Version
           </a>
