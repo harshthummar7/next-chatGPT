@@ -2,10 +2,12 @@
   position: absolute;
   top: 50%;
   display: flex;
-  justify-content: center;
-  flex-direction: row;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
-  margin: 18px;
+  /* margin: 0px; */
+  height: 10vh;
+  justify-content: space-around;
 }
 
 .main input {
@@ -16,8 +18,25 @@
 }
 
 .main button {
-  margin-left: 4vw;
   padding: 5px;
   background: #d2e0ed;
   border-radius: 7px;
+  min-width: 13vw;
+}
+
+.progressBar {
+  height: 10px;
+  background-color: rgb(87, 114, 118);
+}
+
+.progress {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Dynamically update the width of the progress bar */
+.progressBar.active {
+  width: 0%;
+  transition: width 2s ease-in-out;
+  background-color: green;
 }

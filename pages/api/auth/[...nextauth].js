@@ -80,7 +80,7 @@ export default NextAuth({
       // console.log("RT", account?.refresh_token);
       console.log("calling");
       if (account) {
-        console.log({ account }, { token }, { profile });
+        // console.log({ account }, { token }, { profile });
         token.accessToken = jwt.sign(
           {
             id: token.sub,
