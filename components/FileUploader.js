@@ -2,14 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import style from "../styles/FileUploader.module.css";
 import { getSession } from "next-auth/react";
 import axios from "axios";
-import Image from "next/image";
-
-let imageUrl;
 
 const FileUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [id, setId] = useState(null);
+  const [url, setUrl] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleSelect = () => {
@@ -22,6 +19,7 @@ const FileUploader = () => {
 
   const handleUpload = async () => {
     const file = selectedFile;
+
     const formData = new FormData();
     formData.append("file", file);
     try {
@@ -35,31 +33,58 @@ const FileUploader = () => {
       const response = await axios.post("/api/uploadFile", formData, {
         // method: "POST",
         // body: formData,
+
         onUploadProgress: (progressEvent) => {
           const progress = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           );
-          console.log(progress);
+          console.log(progressEvent.loaded, progressEvent.total);
+          // console.log(progressEvent);
           setUploadProgress(progress);
         },
       });
 
       if (response.status === 200) {
         const data = await response.data;
-        console.log("File uploaded successfully. File ID:", data.fileId);
-        setSelectedFile(null);
-        imageUrl = data.url;
+        //console.log(data);
+        console.log(
+          "File uploaded successfully. File ID:",
+          data.fileDetail.data.id
+        );
+
+        // Open the file in a new tab
+        // window.open(fileUrl, "_blank");
+        //  setUploadProgress(data.arr);
+
+        // imageUrl = data.url;
+        // console.log(imageUrl);
         //imageUrl = `https://drive.google.com/uc?export=view&id=1jcnIZpW60Ay1lROutHNCFFjYojzPWCfs`;
         // imageUrl = `https://drive.google.com/uc?id=1oZaUpHmGEYFlDeMaklh-4Y7vZ8zbxV6z`;
-        setId(data.fileId);
+        // console.log(data.dataUrl);
+        // const iframe = document.getElementById("myIframe");
+        // iframe.src = data.dataUrl;
+        setUrl(data.dataUrl);
       } else {
-        console.log("isssue");
         console.error("Error uploading in file:", response.statusText);
       }
     } catch (error) {
       console.error("Error uploading  file:", error);
     }
   };
+
+  useEffect(() => {
+    if (uploadProgress === 100) {
+      const timer = setTimeout(() => {
+        alert("File successfully uploaded");
+        setSelectedFile(null);
+        setUploadProgress(0);
+      }, 1000); // Delay in milliseconds
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [uploadProgress]);
 
   return (
     <>
@@ -78,23 +103,22 @@ const FileUploader = () => {
         <button onClick={handleUpload} disabled={!selectedFile}>
           Upload
         </button>
-        {/* {uploadProgress > 0 && (
+        {uploadProgress > 0 && (
           <div className={style.progress}>
             <div
-              className={`${style.progressBar} ${style.active}`}
+              className={style.active}
               style={{ width: `${uploadProgress}%` }}
             >
-              {uploadProgress}
+              {`${uploadProgress}%`}
             </div>
           </div>
-        )} */}
+        )}
+        {url && (
+          <div className={style.frame}>
+            <iframe id="myIframe" src={`${url}`} width="500" height="300" />
+          </div>
+        )}
       </div>
-      {id !== null && (
-        <div>
-          <h1>Uploaded Image</h1>
-          <img src={imageUrl} alt="Uploaded Image" width={500} height={500} />
-        </div>
-      )}
     </>
   );
 };

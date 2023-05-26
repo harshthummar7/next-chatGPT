@@ -27,7 +27,6 @@ export default async function upload(req, res) {
 
     const { file } = files;
     // const { session } = fields;
-
     // const sessionValue = JSON.parse(session);
     const auth = new google.auth.GoogleAuth({
       keyFile: keyFilePath,
@@ -38,21 +37,31 @@ export default async function upload(req, res) {
     const drive = google.drive({ version: "v3", auth });
 
     try {
-      const { data } = await drive.files.create({
+      const fileSize = fs.statSync(file.filepath).size.toString();
+      console.log(fileSize);
+      let uploadedBytes = 0;
+
+      const data = await drive.files.create({
         requestBody: {
           name: file.originalFilename,
           parents: ["1LlaefbvZpW0qq-VEYk8w3hvoMmis-NDo"],
         },
-        //"1vxXjt1JRDrdDLjbomta3rMk6HfhygqGj"
         media: {
           mimeType: file.mimetype,
-          body: fs.createReadStream(`${file.filepath}`),
+          body: fs.createReadStream(`${file.filepath}`).on("data", (chunk) => {
+            uploadedBytes += chunk.length;
+            const progress = Math.round((uploadedBytes / fileSize) * 100);
+
+            console.log(progress);
+          }),
         },
       });
+      // console.log(arr);
+      const dataUrl = await getFileContent(data.data.id);
+      // console.log(dataUrl);
+      // console.log("data", data);
 
-      const dataUrl = await getFileContent(data.id);
-      console.log(dataUrl);
-      res.status(200).json({ fileId: data.id, url: dataUrl });
+      res.status(200).json({ fileDetail: data, dataUrl });
     } catch (error) {
       res.status(500).json({ error: error });
     }
@@ -77,6 +86,7 @@ async function getFileContent(fileId) {
 
     const data = Buffer.from(response.data, "binary").toString("base64");
     const mimeType = response.headers["content-type"];
+    console.log(mimeType);
     const dataUrl = `data:${mimeType};base64,${data}`;
 
     return dataUrl;
@@ -187,3 +197,124 @@ async function getFileContent(fileId) {
 // wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
 //   wss.emit("connection", ws, req);
 // });
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// const wss = new WebSocket.Server({ noServer: true });
+// wss.on("connection", (ws) => {
+//   ws.on("message", (message) => {
+//     console.log("Received message from client: ", message);
+//   });
+
+//   // Send progress updates to the client
+//   const sendProgressUpdate = (progress) => {
+//     ws.send(JSON.stringify({ progress }));
+//   };
+
+//   // Upload the file and send progress updates
+//   fs.createReadStream(file.filepath)
+//     .on("data", (chunk) => {
+//       uploadedBytes += chunk.length;
+//       const progress = Math.round((uploadedBytes / fileSize) * 100);
+//       sendProgressUpdate(progress);
+//     })
+//     .on("end", async () => {
+//       sendProgressUpdate(100);
+
+//       try {
+//         const { data } = await drive.files.create({
+//           requestBody: {
+//             name: file.originalFilename,
+//             parents: ["1LlaefbvZpW0qq-VEYk8w3hvoMmis-NDo"],
+//           },
+//           media: {
+//             mimeType: file.mimetype,
+//             body: fs.createReadStream(file.filepath),
+//           },
+//         });
+
+//         console.log(data);
+//         res.status(200).json({ fileId: data.id });
+//////////////////////
+// const server = createServer((req, res) => {
+//   res.writeHead(404);
+//   res.end();
+// });
+// const io = new SocketServer(server);
+
+// io.on("connection", (socket) => {
+//   console.log("Client connected.");
+
+//   const sendProgressUpdate = (progress) => {
+//     socket.emit('progress', progress);
+//   };
+// });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// const server = createServer((req, res) => {
+//   res.writeHead(404);
+//   res.end();
+// });
+// const io = new SocketServer(server);
+// try {
+//   io.on("connection", (socket) => {
+//     console.log("Client connected.");
+
+//     const sendProgressUpdate = (progress) => {
+//       socket.emit("progress", progress);
+//     };
+
+//     const form = new formidable.IncomingForm();
+
+//     form.parse(req, async (err, fields, files) => {
+//       if (err) {
+//         res.status(500).json({ error: "Failed to parse form data." });
+//         return;
+//       }
+
+//       const { file } = files;
+//       // const { session } = fields;
+//       // const sessionValue = JSON.parse(session);
+//       const auth = new google.auth.GoogleAuth({
+//         keyFile: keyFilePath,
+//         scopes: ["https://www.googleapis.com/auth/drive"],
+//       });
+
+//       const drive = google.drive({ version: "v3", auth });
+
+//       const fileSize = fs.statSync(file.filepath).size.toString();
+//       console.log(fileSize);
+//       let uploadedBytes = 0;
+//       // const arr = [];
+
+//       const data = await drive.files.create({
+//         requestBody: {
+//           name: file.originalFilename,
+//           parents: ["1LlaefbvZpW0qq-VEYk8w3hvoMmis-NDo"],
+//         },
+//         media: {
+//           mimeType: file.mimetype,
+//           body: fs
+//             .createReadStream(`${file.filepath}`)
+//             .on("data", (chunk) => {
+//               uploadedBytes += chunk.length;
+//               const progress = Math.round((uploadedBytes / fileSize) * 100);
+//               console.log(progress);
+//               sendProgressUpdate(progress);
+//             })
+//             .on("end", async () => {
+//               // ...
+
+//               socket.disconnect();
+//             }),
+//         },
+//       });
+//     });
+//   });
+//   // server.listen();
+//   res.status(200).json({ fileId: data });
+// } catch (error) {
+//   res.status(500).json({ error: error });
+// }

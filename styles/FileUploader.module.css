@@ -6,7 +6,7 @@
   flex-direction: column;
   width: 100%;
   /* margin: 0px; */
-  height: 10vh;
+  min-height: 10vh;
   justify-content: space-around;
 }
 
@@ -24,19 +24,25 @@
   min-width: 13vw;
 }
 
-.progressBar {
+/* .progressBar {
   height: 10px;
   background-color: rgb(87, 114, 118);
-}
+} */
 
 .progress {
-  margin-top: 10px;
   width: 100%;
+  padding: 0 2em;
+  /* background-color: rgb(87, 114, 118); */
 }
 
 /* Dynamically update the width of the progress bar */
-.progressBar.active {
+.active {
   width: 0%;
-  transition: width 2s ease-in-out;
+  transition: width 1s ease-in-out;
   background-color: green;
+  text-align: end;
+  border-radius: 4px;
+}
+
+.frame {
 }
