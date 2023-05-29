@@ -7,6 +7,8 @@ const FileUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [url, setUrl] = useState(null);
+  const [load, setLoad] = useState(0);
+  const [imgTag, setImgTag] = useState(false);
   const fileInputRef = useRef(null);
 
   const handleSelect = () => {
@@ -29,40 +31,29 @@ const FileUploader = () => {
         console.error("User not authenticated.");
         return;
       }
-      // formData.append("session", JSON.stringify(session));
-      const response = await axios.post("/api/uploadFile", formData, {
-        // method: "POST",
-        // body: formData,
 
+      const response = await axios.post("/api/uploadFile", formData, {
         onUploadProgress: (progressEvent) => {
           const progress = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           );
-          console.log(progressEvent.loaded, progressEvent.total);
-          // console.log(progressEvent);
+
           setUploadProgress(progress);
         },
       });
 
       if (response.status === 200) {
         const data = await response.data;
-        //console.log(data);
+
         console.log(
           "File uploaded successfully. File ID:",
           data.fileDetail.data.id
         );
+        setLoad(0);
+        if (data.fileDetail.data.mimeType.startsWith("image/")) {
+          setImgTag(true);
+        }
 
-        // Open the file in a new tab
-        // window.open(fileUrl, "_blank");
-        //  setUploadProgress(data.arr);
-
-        // imageUrl = data.url;
-        // console.log(imageUrl);
-        //imageUrl = `https://drive.google.com/uc?export=view&id=1jcnIZpW60Ay1lROutHNCFFjYojzPWCfs`;
-        // imageUrl = `https://drive.google.com/uc?id=1oZaUpHmGEYFlDeMaklh-4Y7vZ8zbxV6z`;
-        // console.log(data.dataUrl);
-        // const iframe = document.getElementById("myIframe");
-        // iframe.src = data.dataUrl;
         setUrl(data.dataUrl);
       } else {
         console.error("Error uploading in file:", response.statusText);
@@ -76,9 +67,10 @@ const FileUploader = () => {
     if (uploadProgress === 100) {
       const timer = setTimeout(() => {
         alert("File successfully uploaded");
-        setSelectedFile(null);
+        setLoad(1);
+
         setUploadProgress(0);
-      }, 1000); // Delay in milliseconds
+      }, 1000);
 
       return () => {
         clearTimeout(timer);
@@ -113,10 +105,18 @@ const FileUploader = () => {
             </div>
           </div>
         )}
-        {url && (
-          <div className={style.frame}>
-            <iframe id="myIframe" src={`${url}`} width="500" height="300" />
-          </div>
+        {load === 1 ? (
+          <div className={style.loader}></div>
+        ) : (
+          url && (
+            <div className={style.frame}>
+              {imgTag === true ? (
+                <img src={`${url}`} width="500" height="300" />
+              ) : (
+                <iframe src={`${url}`} width="500" height="300" />
+              )}
+            </div>
+          )
         )}
       </div>
     </>

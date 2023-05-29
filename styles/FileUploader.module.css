@@ -5,7 +5,7 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  /* margin: 0px; */
+
   min-height: 10vh;
   justify-content: space-around;
 }
@@ -22,27 +22,44 @@
   background: #d2e0ed;
   border-radius: 7px;
   min-width: 13vw;
+  margin: 6px;
 }
-
-/* .progressBar {
-  height: 10px;
-  background-color: rgb(87, 114, 118);
-} */
 
 .progress {
   width: 100%;
   padding: 0 2em;
-  /* background-color: rgb(87, 114, 118); */
 }
 
-/* Dynamically update the width of the progress bar */
 .active {
   width: 0%;
-  transition: width 1s ease-in-out;
+  transition: width linear;
   background-color: green;
   text-align: end;
   border-radius: 4px;
 }
 
 .frame {
+  margin: 4px;
+}
+
+.frame img {
+  width: 100%;
+  height: 100%;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
