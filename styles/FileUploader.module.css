@@ -5,8 +5,7 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-
-  min-height: 10vh;
+  min-height: 14vh;
   justify-content: space-around;
 }
 
@@ -62,4 +61,34 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.dragging {
+  background-color: #e6f7ff;
+  border: 2px dashed;
+  min-width: 20%;
+  height: fit-content;
+  padding: 30px;
+  margin-top: -16vh;
+  text-align: center;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.first {
+  margin-bottom: 27px;
+}
+
+.first i {
+  font-size: xxx-large;
+}
+
+.dragging p {
+  font-size: x-large;
+}
+.second {
+  margin-top: 27px;
 }
