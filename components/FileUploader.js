@@ -82,6 +82,14 @@ const FileUploader = () => {
     setSelectedFile(event.dataTransfer.files[0]);
   };
 
+  const handleDragStart = (event) => {
+    console.log("1");
+    const file = selectedFile;
+    if (file) {
+      event.dataTransfer.setData("text/plain", file.name);
+    }
+  };
+
   useEffect(() => {
     if (uploadProgress === 100) {
       const timer = setTimeout(() => {
@@ -119,7 +127,7 @@ const FileUploader = () => {
               onChange={handleFileSelect}
               style={{ display: "none" }}
             />
-            <button onClick={handleSelect}>
+            <button onClick={handleSelect} onDragStart={handleDragStart}>
               <i className="bi bi-paperclip"></i>Select File
               {selectedFile && <p>{selectedFile.name}</p>}
             </button>

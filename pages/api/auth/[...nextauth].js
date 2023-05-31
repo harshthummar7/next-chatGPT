@@ -77,30 +77,29 @@ export default NextAuth({
 
   callbacks: {
     async jwt({ token, account, profile }) {
-      // console.log("RT", account?.refresh_token);
       console.log("calling");
       if (account) {
-        // console.log({ account }, { token }, { profile });
-        token.accessToken = jwt.sign(
-          {
-            id: token.sub,
-            email: token.email,
-          },
-          process.env.JWT_SECRET,
-          { expiresIn: "1d" }
-        );
+        if (Date.now() >= account?.expires_at * 1000) {
+          // Access token expired, use refresh token to generate new access token
+          const { access_token, expires_at } = await getToken({
+            refreshToken: account?.refresh_token,
+          });
 
-        token.id = profile?.sub;
-        token.refreshToken = account?.refresh_token;
-      }
-      if (Date.now() >= account?.expires_at * 1000) {
-        // Access token expired, use refresh token to generate new access token
-        const { access_token, expires_at } = await getToken({
-          refreshToken: account?.refresh_token,
-        });
+          token.accessToken = access_token;
+          token.expiresAt = expires_at;
+        } else {
+          token.accessToken = jwt.sign(
+            {
+              id: token.sub,
+              email: token.email,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+          );
 
-        token.accessToken = access_token;
-        token.expiresAt = expires_at;
+          token.id = profile?.sub;
+          token.refreshToken = account?.refresh_token;
+        }
       }
 
       return token;
